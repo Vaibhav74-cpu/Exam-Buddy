@@ -292,6 +292,136 @@
 // export default NotesPage;
 
 
+// ******************************************************************************************
+
+
+
+// import React, { useState, useEffect } from "react";
+
+// function NotesPage() {
+//   const [notes, setNotes] = useState([]);
+//   const [title, setTitle] = useState("");
+//   const [description, setDescription] = useState("");
+//   const [file, setFile] = useState(null);
+
+//   // Fetch notes from backend
+//   useEffect(() => {
+//     fetch("http://localhost:5000/api/notes")
+//       .then((res) => res.json())
+//       .then((data) => setNotes(data))
+//       .catch((err) => console.error("Failed to fetch notes:", err));
+//   }, []);
+
+//   // Handle upload
+//   const handleUpload = async (e) => {
+//     e.preventDefault();
+
+//     if (!title || !description || !file) {
+//       alert("All fields are required!");
+//       return;
+//     }
+
+//     const formData = new FormData();
+//     formData.append("title", title);
+//     formData.append("description", description);
+//     formData.append("noteFile", file);
+
+//     try {
+//       // 🔑 Get token from localStorage (set during login)
+//       const token = localStorage.getItem("token");
+
+//       if (!token) {
+//         alert("You must be logged in to upload notes!");
+//         return;
+//       }
+
+//       const res = await fetch("http://localhost:5000/api/notes", {
+//         method: "POST",
+//         headers: {
+//           Authorization: `Bearer ${token}`, // ✅ attach token
+//         },
+//         body: formData,
+//       });
+
+//       if (res.ok) {
+//         const newNote = await res.json();
+//         setNotes([...notes, newNote]); // update UI
+//         setTitle("");
+//         setDescription("");
+//         setFile(null);
+//         alert("✅ Note uploaded successfully!");
+//       } else {
+//         const errorData = await res.json();
+//         alert(`❌ Failed to upload note: ${errorData.message}`);
+//       }
+//     } catch (err) {
+//       console.error("Upload error:", err);
+//       alert("❌ Error uploading note");
+//     }
+//   };
+
+//   return (
+//     <div style={{ padding: "20px" }}>
+//       <h1>📚 Notes</h1>
+
+//       {/* Upload Form */}
+//       <form onSubmit={handleUpload} style={{ marginBottom: "20px" }}>
+//         <input
+//           type="text"
+//           placeholder="Enter Title"
+//           value={title}
+//           onChange={(e) => setTitle(e.target.value)}
+//           required
+//           style={{ marginRight: "10px" }}
+//         />
+//         <input
+//           type="text"
+//           placeholder="Enter Description"
+//           value={description}
+//           onChange={(e) => setDescription(e.target.value)}
+//           required
+//           style={{ marginRight: "10px" }}
+//         />
+//         <input
+//           type="file"
+//           onChange={(e) => setFile(e.target.files[0])}
+//           required
+//           style={{ marginRight: "10px" }}
+//         />
+//         <button type="submit">Upload Note</button>
+//       </form>
+
+//       {/* Notes List */}
+//       {notes.map((note) => (
+//         <div
+//           key={note._id}
+//           style={{
+//             border: "1px solid #ddd",
+//             borderRadius: "8px",
+//             padding: "10px",
+//             marginBottom: "10px",
+//             backgroundColor: "#f9f9f9",
+//           }}
+//         >
+//           <h3>{note.title}</h3>
+//           <p>{note.description}</p>
+//           <a href={`http://localhost:5000${note.fileUrl}`} download>
+//             📂 Download File
+//           </a>
+//           <p style={{ fontSize: "12px", color: "gray" }}>
+//             Uploaded by: {note.uploadedBy?.name} ({note.uploadedBy?.email})
+//           </p>
+//         </div>
+//       ))}
+//     </div>
+//   );
+// }
+
+// export default NotesPage;
+
+
+// // ***************************************************************************************************************
+
 
 import React, { useState, useEffect } from "react";
 
