@@ -1,5 +1,6 @@
 
 
+
 import express from "express";
 import Exam from "../models/Exam.js";
 // import authMiddleware from "../middleware/authMiddleware.js";
@@ -8,7 +9,7 @@ import { protect } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// ✅ Create Exam (Protected)
+//  Create Exam (Protected)
 router.post("/", protect, async (req, res) => {
   try {
     const { title, description } = req.body;
@@ -26,7 +27,7 @@ router.post("/", protect, async (req, res) => {
   }
 });
 
-// ✅ Get All Exams (Public)
+//  Get All Exams (Public)
 router.get("/", async (req, res) => {
   try {
     const exams = await Exam.find().populate("createdBy", "name email");
@@ -37,7 +38,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-// ✅ Get Single Exam by ID (Public)
+// Get Single Exam by ID (Public)
 router.get("/:id", async (req, res) => {
   try {
     const exam = await Exam.findById(req.params.id).populate(

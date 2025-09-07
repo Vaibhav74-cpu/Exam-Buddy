@@ -1,4 +1,3 @@
-
 // backend/server.js
 import express from "express";
 import path from "path";
@@ -9,9 +8,11 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import cors from "cors";
 
+// ✅ Import Routes
 import authRoutes from "./routes/authRoutes.js";
 import examRoutes from "./routes/examRoutes.js";
 import noteRoutes from "./routes/noteRoutes.js";
+import examQuestionRoutes from "./routes/questionRoutes.js"; // ⬅️ NEW
 
 dotenv.config();
 
@@ -28,10 +29,10 @@ if (!fs.existsSync(uploadsDir)) {
   console.log("📂 uploads folder created");
 }
 
-// ✅ Allow frontend requests
+// ✅ Allow frontend requests (CORS)
 app.use(
   cors({
-    origin: "http://localhost:5173", // Adjust if frontend runs elsewhere
+    origin: "http://localhost:5173", // Change if frontend runs on another port
     credentials: true,
   })
 );
@@ -40,7 +41,7 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ✅ Serve static uploads folder
+// ✅ Serve uploads as static files
 app.use("/uploads", express.static(uploadsDir));
 
 // ✅ Health check
@@ -52,6 +53,7 @@ app.get("/api/ping", (req, res) => {
 app.use("/api/auth", authRoutes);
 app.use("/api/exams", examRoutes);
 app.use("/api/notes", noteRoutes);
+app.use("/api/exams", examQuestionRoutes); // ⬅️ NEW mount
 
 // ✅ MongoDB Connection
 mongoose
