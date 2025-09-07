@@ -1,8 +1,8 @@
-// frontend/src/pages/RegisterPage.jsx
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function RegisterPage() {
+function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,42 +27,58 @@ function RegisterPage() {
         alert(`❌ ${data.message}`);
       }
     } catch (err) {
-      console.error("Register error:", err);
+      console.error(err);
+      alert("❌ Something went wrong!");
     }
   };
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h2>📝 Register</h2>
-      <form onSubmit={handleRegister}>
-        <input
-          type="text"
-          placeholder="Enter Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
-          style={{ margin: "10px" }}
-        />
-        <input
-          type="email"
-          placeholder="Enter Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          style={{ margin: "10px" }}
-        />
-        <input
-          type="password"
-          placeholder="Enter Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-          style={{ margin: "10px" }}
-        />
-        <button type="submit">Register</button>
-      </form>
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-green-50 to-green-100">
+      <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
+        <h2 className="text-3xl font-bold text-green-600 text-center mb-6">
+          Create Account
+        </h2>
+        <form onSubmit={handleRegister} className="space-y-4">
+          <input
+            type="text"
+            placeholder="Full Name"
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-400 outline-none"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-400 outline-none"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-400 outline-none"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button
+            type="submit"
+            className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg shadow-md"
+          >
+            🎉 Register
+          </button>
+        </form>
+        <p className="text-gray-600 text-sm text-center mt-4">
+          Already have an account?{" "}
+          <a href="/login" className="text-green-600 font-semibold hover:underline">
+            Login here
+          </a>
+        </p>
+      </div>
     </div>
   );
 }
 
-export default RegisterPage;
+export default Register;

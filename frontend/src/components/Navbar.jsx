@@ -1,148 +1,63 @@
-// // frontend/src/components/Navbar.jsx
-// import React from "react";
-// import { Link, useNavigate } from "react-router-dom";
 
-// function Navbar() {
-//   const navigate = useNavigate();
-//   const token = localStorage.getItem("token");
-
-//   const handleLogout = () => {
-//     localStorage.removeItem("token"); // ❌ Clear token
-//     alert("👋 Logged out successfully!");
-//     navigate("/login"); // Redirect to login
-//   };
-
-//   return (
-//     <nav style={{ padding: "10px", background: "#eee" }}>
-//       <Link to="/notes" style={{ marginRight: "10px" }}>📚 Notes</Link>
-
-//       {!token ? (
-//         <>
-//           <Link to="/login" style={{ marginRight: "10px" }}>🔑 Login</Link>
-//           <Link to="/register">📝 Register</Link>
-//         </>
-//       ) : (
-//         <button onClick={handleLogout} style={{ marginLeft: "10px" }}>
-//           🚪 Logout
-//         </button>
-//       )}
-//     </nav>
-//   );
-// }
-
-// export default Navbar;
-
-
-// ***********************************************************
-
-
-// // frontend/src/components/Navbar.jsx
-// import React from "react";
-// import { Link, useNavigate } from "react-router-dom";
-
-// function Navbar() {
-//   const navigate = useNavigate();
-//   const token = localStorage.getItem("token");
-
-//   const handleLogout = () => {
-//     localStorage.removeItem("token"); // remove JWT
-//     navigate("/login"); // redirect to login
-//   };
-
-//   return (
-//     <nav style={{ padding: "10px", background: "#f0f0f0" }}>
-//       <Link to="/" style={{ marginRight: "10px" }}>
-//         Home
-//       </Link>
-
-//       {!token ? (
-//         <>
-//           <Link to="/login" style={{ marginRight: "10px" }}>
-//             Login
-//           </Link>
-//           <Link to="/register">Register</Link>
-//         </>
-//       ) : (
-//         <>
-//           <Link to="/notes" style={{ marginRight: "10px" }}>
-//             Notes
-//           </Link>
-//           <button onClick={handleLogout} style={{ cursor: "pointer" }}>
-//             Logout
-//           </button>
-//         </>
-//       )}
-//     </nav>
-//   );
-// }
-
-// export default Navbar;
-
-
-
-// ****************************************
-
-// frontend/src/components/Navbar.jsx
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 
 function Navbar() {
-  const navigate = useNavigate();
-  const token = localStorage.getItem("token");
-  const [user, setUser] = useState(null);
-
-  // ✅ Fetch user profile if logged in
-  useEffect(() => {
-    if (token) {
-      fetch("http://localhost:5000/api/auth/profile", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.user) {
-            setUser(data.user);
-          }
-        })
-        .catch((err) => console.error("Profile fetch failed:", err));
-    }
-  }, [token]);
-
-  const handleLogout = () => {
-    localStorage.removeItem("token"); // remove JWT
-    setUser(null);
-    navigate("/login"); // redirect to login
-  };
-
   return (
-    <nav style={{ padding: "10px", background: "#f0f0f0" }}>
-      <Link to="/" style={{ marginRight: "10px" }}>
-        Home
-      </Link>
+    <nav className="bg-blue-600 text-white shadow-md">
+      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+        {/* Logo */}
+        <Link to="/" className="text-2xl font-bold tracking-wide">
+          ExamBuddy 🚀
+        </Link>
 
-      {!token ? (
-        <>
-          <Link to="/login" style={{ marginRight: "10px" }}>
-            Login
+        {/* Links */}
+        <div className="space-x-6 hidden md:flex">
+          <Link
+            to="/"
+            className="hover:text-blue-200 font-medium transition-colors"
+          >
+            Home
           </Link>
-          <Link to="/register">Register</Link>
-        </>
-      ) : (
-        <>
-          <Link to="/notes" style={{ marginRight: "10px" }}>
+          <Link
+            to="/notes"
+            className="hover:text-blue-200 font-medium transition-colors"
+          >
             Notes
           </Link>
-          {user && (
-            <span style={{ marginRight: "10px" }}>
-              👋 Welcome, <b>{user.name}</b>
-            </span>
-          )}
-          <button onClick={handleLogout} style={{ cursor: "pointer" }}>
-            Logout
+          <Link
+            to="/login"
+            className="hover:text-blue-200 font-medium transition-colors"
+          >
+            Login
+          </Link>
+          <Link
+            to="/register"
+            className="hover:text-blue-200 font-medium transition-colors"
+          >
+            Register
+          </Link>
+        </div>
+
+        {/* Mobile Menu (Hamburger) */}
+        <div className="md:hidden">
+          <button className="focus:outline-none">
+            <svg
+              className="w-6 h-6 text-white"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
           </button>
-        </>
-      )}
+        </div>
+      </div>
     </nav>
   );
 }
