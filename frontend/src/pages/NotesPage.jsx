@@ -77,7 +77,8 @@ function NotesPage() {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
-          className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+          className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400 
+                     text-gray-900 placeholder-gray-400"
         />
         <input
           type="text"
@@ -85,14 +86,25 @@ function NotesPage() {
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           required
-          className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
+          className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400 
+                     text-gray-900 placeholder-gray-400"
         />
-        <input
-          type="file"
-          onChange={(e) => setFile(e.target.files[0])}
-          required
-          className="w-full p-2 border rounded-lg"
-        />
+
+        {/* File Upload */}
+        <div>
+          <input
+            type="file"
+            onChange={(e) => setFile(e.target.files[0])}
+            required
+            className="w-full p-2 border rounded-lg"
+          />
+          {file && (
+            <p className="mt-2 text-sm text-gray-600">
+              📂 Selected File: <span className="font-medium">{file.name}</span>
+            </p>
+          )}
+        </div>
+
         <button
           type="submit"
           className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg shadow-md"

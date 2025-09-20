@@ -42,7 +42,8 @@ function Register() {
           <input
             type="text"
             placeholder="Full Name"
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-400 outline-none"
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400 
+                     text-gray-900 placeholder-gray-400"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
@@ -50,7 +51,8 @@ function Register() {
           <input
             type="email"
             placeholder="Email"
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-400 outline-none"
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400 
+                     text-gray-900 placeholder-gray-400"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -58,7 +60,8 @@ function Register() {
           <input
             type="password"
             placeholder="Password"
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-green-400 outline-none"
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400 
+                     text-gray-900 placeholder-gray-400"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required

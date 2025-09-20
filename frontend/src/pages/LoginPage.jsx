@@ -1,14 +1,18 @@
 
+
+// frontend/src/pages/LoginPage.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Login() {
+function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const res = await fetch("http://localhost:5000/api/auth/login", {
@@ -19,58 +23,61 @@ function Login() {
 
       const data = await res.json();
 
-      if (res.ok) {
+      if (res.ok && data.token) {
+        // Save token and notify other components (same tab)
         localStorage.setItem("token", data.token);
-        alert("✅ Login successful!");
-        navigate("/notes");
+        window.dispatchEvent(new Event("authChange"));
+
+        // optionally store user info in localStorage
+        // localStorage.setItem('user', JSON.stringify({ name: data.name, email: data.email }));
+
+        navigate("/"); // or navigate to /notes or dashboard
       } else {
-        alert(`❌ ${data.message}`);
+        alert(data.message || "Login failed");
       }
     } catch (err) {
-      console.error(err);
-      alert("❌ Something went wrong!");
+      console.error("Login error:", err);
+      alert("Failed to connect to server");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-50 to-blue-100">
-      <div className="bg-white shadow-lg rounded-2xl p-8 w-full max-w-md">
-        <h2 className="text-3xl font-bold text-blue-600 text-center mb-6">
-          Login to ExamBuddy
-        </h2>
-        <form onSubmit={handleLogin} className="space-y-4">
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-blue-100">
+      <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
+        <h2 className="text-2xl font-bold text-center text-blue-600 mb-6">Login to ExamBuddy</h2>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="email"
             placeholder="Email"
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
             required
           />
+
           <input
             type="password"
             placeholder="Password"
-            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-400 outline-none"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-gray-900"
             required
           />
+
           <button
             type="submit"
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg shadow-md"
+            disabled={loading}
+            className="w-full py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 font-medium"
           >
-            🚀 Login
+            {loading ? "Logging in..." : "🚀 Login"}
           </button>
         </form>
-        <p className="text-gray-600 text-sm text-center mt-4">
-          Don’t have an account?{" "}
-          <a href="/register" className="text-blue-600 font-semibold hover:underline">
-            Register here
-          </a>
-        </p>
       </div>
     </div>
   );
 }
 
-export default Login;
+export default LoginPage;
