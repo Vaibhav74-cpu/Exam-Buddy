@@ -1,4 +1,4 @@
-// backend/models/Result.js
+
 import mongoose from "mongoose";
 
 const answerSchema = new mongoose.Schema({

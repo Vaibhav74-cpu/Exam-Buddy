@@ -1,4 +1,4 @@
-// backend/models/Question.js
+
 import mongoose from "mongoose";
 
 const questionSchema = new mongoose.Schema(
